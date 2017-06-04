@@ -12,4 +12,5 @@ var kAllSolvers = []Solver{
 	&ListSolver{},
 	&CountListSolver{},
 	&BitfieldSolver{},
+	&PrimeWordSolver{},
 }
