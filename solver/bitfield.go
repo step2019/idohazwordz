@@ -1,6 +1,7 @@
 package solver
 
 import (
+	"log"
 	"math/big"
 	"sort"
 
@@ -59,6 +60,7 @@ func (s *BitfieldSolver) Init(dict []string) error {
 	for sorted := range s.rs.sorted {
 		s.max = words.Max(s.max, words.Count(sorted))
 	}
+	log.Printf("Bitfield: max covering = %v", s.max)
 	for sorted, cs := range s.rs.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
