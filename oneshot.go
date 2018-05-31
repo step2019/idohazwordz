@@ -90,11 +90,11 @@ var (
 )
 
 func Normalize(word string) string {
-	return qFixer.Replace(strings.ToUpper(word))
+	return qFixer.Replace(strings.ToUpper(word)) // 大文字にして、QUをQにする
 }
 
 func Denormalize(word string) string {
-	return qUnfixer.Replace(Normalize(word))
+	return qUnfixer.Replace(Normalize(word)) // QをQUに戻す
 }
 
 func loadDictionary(filename string) []string {
@@ -107,14 +107,15 @@ func loadDictionary(filename string) []string {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		word := scanner.Text()
-		if !wordRE.MatchString(word) {
+		if !wordRE.MatchString(word) { // もし変な使えない文字があったら飛ばす。
 			continue
 		}
-		norm := Normalize(word)
-		if len(norm) > *maxLetters || len(norm) < *minLetters {
+		norm := Normalize(word) // 大文字にしてQUをQにする。
+
+		if len(norm) > *maxLetters || len(norm) < *minLetters { // もし長過ぎたり短すぎたりしたら飛ばす。
 			continue
 		}
-		dict = append(dict, norm)
+		dict = append(dict, norm) // 辞書に追加しておく。
 	}
 	log.Printf("loaded %v words", len(dict))
 	return dict
