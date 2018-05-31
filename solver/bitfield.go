@@ -55,12 +55,20 @@ type BitfieldSolver struct {
 	Solver
 }
 
+func total(m words.CountMap) int {
+	t := 0
+	for _, count := range m {
+		t += count
+	}
+	return t
+}
+
 func (s *BitfieldSolver) Init(dict []string) error {
 	s.rs.Init(dict)
 	for sorted := range s.rs.sorted {
 		s.max = words.Max(s.max, words.Count(sorted))
 	}
-	log.Printf("Bitfield: max covering = %v", s.max)
+	log.Printf("Bitfield: max covering = %v (%d bits)", s.max, total(s.max))
 	for sorted, cs := range s.rs.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
