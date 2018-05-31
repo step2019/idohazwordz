@@ -50,7 +50,7 @@ func main() {
 				best = word // 結果として保存しておく。
 			}
 		}
-		fmt.Println("Longest word: ", Denormalize(longest))
+		fmt.Println("Longest word        : ", Denormalize(longest))
 		fmt.Println("Highest scoring word: ", Denormalize(best))
 	}
 }
@@ -79,7 +79,7 @@ func isSubsequence(needle, haystack string) bool {
 			hi++
 		}
 	}
-	// needleの最後まで進んだたら、ちゃんとhaystackにneedleがsubstringとしてありました。
+	// needleの最後まで進んだたら、ちゃんとhaystackにneedleがsubstringとして入ってありました。
 	return ni == len(needle)
 }
 
