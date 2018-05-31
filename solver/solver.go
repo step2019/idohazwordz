@@ -5,7 +5,7 @@ type Solver interface {
 	Solve(letters string) string
 }
 
-var kAllSolvers = []Solver{
+var AllSolvers = []Solver{
 	&RecursiveSolver{},
 	&MemoSolver{},
 	&EnumSolver{},

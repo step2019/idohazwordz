@@ -4,7 +4,7 @@ import (
 	"math/big"
 	"sort"
 
-	"github.com/step17/ihazwordz/words"
+	"github.com/step18/ihazwordz/words"
 )
 
 var (

@@ -1,7 +1,7 @@
 package solver
 
 import (
-	"github.com/step17/ihazwordz/words"
+	"github.com/step18/ihazwordz/words"
 )
 
 type PointMap map[rune]int

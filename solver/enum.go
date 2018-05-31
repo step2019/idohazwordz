@@ -1,6 +1,6 @@
 package solver
 
-import "github.com/step17/ihazwordz/words"
+import "github.com/step18/ihazwordz/words"
 
 // EnumSolver enumerates all of the subsets of a given string
 // iteratively instead of recursively.

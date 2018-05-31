@@ -3,7 +3,7 @@ package solver
 import (
 	"sort"
 
-	"github.com/step17/ihazwordz/words"
+	"github.com/step18/ihazwordz/words"
 )
 
 // anaPair stores an anagram word pair (the original word, and the

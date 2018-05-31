@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/step17/ihazwordz/solver"
-	"github.com/step17/ihazwordz/words"
+	"github.com/step18/ihazwordz/solver"
+	"github.com/step18/ihazwordz/words"
 )
 
 var (
