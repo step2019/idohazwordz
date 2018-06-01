@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"sort"
 
-	"github.com/step18/ihazwordz/words"
+	"github.com/step2018/ihazwordz/words"
 )
 
 // Bitfield here describes a bitfield-style representation of the

@@ -3,7 +3,7 @@ package solver
 import (
 	"math"
 
-	"github.com/step18/ihazwordz/words"
+	"github.com/step2018/ihazwordz/words"
 )
 
 // Choices is a type for keeping track of lists of word choices with

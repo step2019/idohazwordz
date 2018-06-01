@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/step18/ihazwordz/solver"
-	"github.com/step18/ihazwordz/words"
+	"github.com/step2018/ihazwordz/solver"
+	"github.com/step2018/ihazwordz/words"
 )
 
 var (
