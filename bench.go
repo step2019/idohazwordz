@@ -1,3 +1,6 @@
+// This program benchmarks all of the solvers by running a series of
+// randomly generated workloads using all of the solvers.  It writes a
+// CSV table of execution times to stdout.
 package main
 
 import (
@@ -60,10 +63,6 @@ func runWorkload(s solver.Solver, wl workload) time.Duration {
 	return time.Since(start)
 }
 
-func name(s solver.Solver) string {
-	return strings.TrimPrefix(fmt.Sprintf("%T", s), "*solver.")
-}
-
 func main() {
 	flag.Parse()
 	dict := words.Load(*dictionaryFile, *letterCount)
@@ -79,7 +78,7 @@ func main() {
 		for _, s := range solvers {
 			for rep := 0; rep < *repitions; rep++ {
 				dur := runWorkload(s, wl)
-				fmt.Printf("%v,%v,%v,%v,%v,%v\n", name(s), wi, rep, *workloadSize, dur.Nanoseconds(), float64(dur.Nanoseconds())/float64(*workloadSize))
+				fmt.Printf("%v,%v,%v,%v,%v,%v\n", solver.Name(s), wi, rep, *workloadSize, dur.Nanoseconds(), float64(dur.Nanoseconds())/float64(*workloadSize))
 			}
 		}
 	}
