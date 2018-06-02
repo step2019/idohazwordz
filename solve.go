@@ -8,8 +8,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/step2018/ihazwordz/solver"
-	"github.com/step2018/ihazwordz/words"
+	"github.com/step2018/idohazwordz/solver"
+	"github.com/step2018/idohazwordz/words"
 )
 
 var (

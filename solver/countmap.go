@@ -3,7 +3,7 @@ package solver
 import (
 	"sort"
 
-	"github.com/step2018/ihazwordz/words"
+	"github.com/step2018/idohazwordz/words"
 )
 
 // cmPair stores an anagram word pair (the original word, and a CountMap of the letters).

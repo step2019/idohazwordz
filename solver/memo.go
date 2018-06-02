@@ -1,6 +1,6 @@
 package solver
 
-import "github.com/step2018/ihazwordz/words"
+import "github.com/step2018/idohazwordz/words"
 
 // MemoSolver is a basic recursive solver, but with memoization.
 type MemoSolver struct {
