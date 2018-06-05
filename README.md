@@ -47,7 +47,6 @@ go run ${GOPATH:-~/go}/src/github.com/step2018/idohazwordz/benchmark/bench.go
 
 ## Learning Go
 
-A great way to start is the tutorial at https://tour.golang.org/ ([日本語版もあ
-る](https://go-tour-jp.appspot.com/)). The "basics" section covers enough to be
+A great way to start is the tutorial at https://tour.golang.org/ ([日本語版もある](https://go-tour-jp.appspot.com/)). The "basics" section covers enough to be
 able to read
 [simplified.go](https://github.com/step2018/idohazwordz/blob/public/simplified.go).
