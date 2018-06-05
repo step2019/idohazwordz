@@ -2,9 +2,9 @@
 
 There are 3 executable programs in here:
 
-* simplified.go - a self-contained single program example solution. You can run this with `go run simplified.go` directly.
-* anysolver/solve.go - a generic interactive solver that runs one of the solvers from the solver package.
-* benchmark/bench.go - a benchmarking program to compare all of the solvers.
+* `simplified.go` - a self-contained single program example solution. You can run this with `go run simplified.go` directly.
+* `anysolver/solve.go` - a generic interactive solver that runs one of the solvers from the solver package.
+* `benchmark/bench.go` - a benchmarking program to compare all of the solvers.
 
 ## How to run these
 
@@ -17,7 +17,7 @@ If you're using Mac OS X you'll have to download and install Go on your machine
 first. You can [download](https://golang.org/dl/) it from https://golang.org .
 
 The default installer on Mac OS X doesn't set up a GOPATH in your environment,
-so it's using the default directory: ~/go .
+so it's using the default directory: `~/go` .
 
 ### Running individual programs.
 
