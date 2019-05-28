@@ -21,32 +21,32 @@ so it's using the default directory: `~/go` .
 
 ### Running individual programs.
 
-solve.go and bench.go require that you have the `step2018/idohazwordz` packages
+solve.go and bench.go require that you have the `step2019/idohazwordz` packages
 available in your [$GOPATH](https://golang.org/doc/code.html). The easiest way
 to do this is to run
 
 ```sh
-go get github.com/step2018/idohazwordz
+go get github.com/step2019/idohazwordz
 ```
 
 This will clone this repository into
-`$GOPATH/src/github.com/step2018/idohazwordz`
-(`~/go/src/github.com/step2018/idohazwordz` by default).  You can then just cd
+`$GOPATH/src/github.com/step2019/idohazwordz`
+(`~/go/src/github.com/step2019/idohazwordz` by default).  You can then just cd
 to this directory, and run these programs directly:
 
 ```sh
-cd ${GOPATH:-~/go}/src/github.com/step2018/idohazwordz
+cd ${GOPATH:-~/go}/src/github.com/step2019/idohazwordz
 go run anysolver/solve.go
 ```
 
 or just run them directly:
 
 ```sh
-go run ${GOPATH:-~/go}/src/github.com/step2018/idohazwordz/benchmark/bench.go
+go run ${GOPATH:-~/go}/src/github.com/step2019/idohazwordz/benchmark/bench.go
 ```
 
 ## Learning Go
 
 A great way to start is the tutorial at https://tour.golang.org/ ([日本語版もある](https://go-tour-jp.appspot.com/)). The "basics" section covers enough to be
 able to read
-[simplified.go](https://github.com/step2018/idohazwordz/blob/public/simplified.go).
+[simplified.go](https://github.com/step2019/idohazwordz/blob/public/simplified.go).

@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/step2018/idohazwordz/solver"
-	"github.com/step2018/idohazwordz/words"
+	"github.com/step2019/idohazwordz/solver"
+	"github.com/step2019/idohazwordz/words"
 )
 
 var (

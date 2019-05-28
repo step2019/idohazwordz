@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/step2018/idohazwordz/words"
+	"github.com/step2019/idohazwordz/words"
 )
 
 func testSolver(t *testing.T, s Solver) {
