@@ -22,6 +22,7 @@ var AllSolvers = []Solver{
 	&MemoSolver{},
 	&EnumSolver{},
 	&ListSolver{},
+	&RegexSolver{},
 	&CountListSolver{},
 	&BitfieldSolver{},
 	&PrimeWordSolver{},
