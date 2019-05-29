@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math"
 	"math/rand"
 	"strings"
 	"time"
@@ -20,7 +21,7 @@ var (
 	dictProbableFrac = flag.Float64("sample", 1, "probabilistically sample this fraction of the dictionary")
 	dictExactFrac    = flag.Float64("exact", 1, "sample exactly this fraction of the dictionary (after --sample)")
 	letterCount      = flag.Int("letters", 16, "How many letters are provided on board?")
-	repitions        = flag.Int("reptitions", 3, "How many times to run each workload.")
+	repitions        = flag.Int("reps", 3, "How many times to run each workload.")
 	workloadCount    = flag.Int("workloads", 123, "Run this many different workloads.")
 	workloadSize     = flag.Int("size", 123, "How many games to run per workload.")
 	seed             = flag.Int64("seed", 0, "Initial random seed. Uses time.Now() if 0.")
@@ -100,13 +101,19 @@ func main() {
 	for _, s := range solvers {
 		s.Init(dict)
 	}
-	fmt.Println(strings.Join([]string{"solver", "workload", "rep", "size", "nanos", "nanos_per_solution"}, ","))
+	fmt.Println(strings.Join([]string{
+		"solver", "workload", "rep", "size",
+		"dict", "letters",
+		"nanos", "log10_nanos_per_solution"}, ","))
 	for wi := 0; wi < *workloadCount; wi++ {
 		wl := fakeWorkload(rng, *workloadSize)
 		for _, s := range solvers {
 			for rep := 0; rep < *repitions; rep++ {
 				dur := runWorkload(s, wl)
-				fmt.Printf("%v,%v,%v,%v,%v,%v\n", solver.Name(s), wi, rep, *workloadSize, dur.Nanoseconds(), float64(dur.Nanoseconds())/float64(*workloadSize))
+				fmt.Printf("%v,%v,%v,%v,%v,%v,%v,%v\n",
+					solver.Name(s), wi, rep, *workloadSize,
+					len(dict), *letterCount,
+					dur.Nanoseconds(), math.Log10(float64(dur.Nanoseconds())/float64(*workloadSize)))
 			}
 		}
 	}

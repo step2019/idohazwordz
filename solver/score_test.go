@@ -27,3 +27,19 @@ func TestScore(t *testing.T) {
 		}
 	}
 }
+
+func TestSort(t *testing.T) {
+	for _, tc := range []struct {
+		in   string
+		want string
+	}{
+		{"CAT", "CAT"},
+		{"PIPE", "PPEI"},
+		{"QACK", "KQCA"},
+		{"", ""},
+	} {
+		if got := SortScore(tc.in); got != tc.want {
+			t.Errorf("SortScore(%q) = %v, want %v", tc.in, got, tc.want)
+		}
+	}
+}

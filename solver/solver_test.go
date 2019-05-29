@@ -40,7 +40,7 @@ func testSolver(t *testing.T, s Solver) {
 }
 
 func TestAll(t *testing.T) {
-	for _, s := range kAllSolvers {
+	for _, s := range AllSolvers {
 		t.Run(fmt.Sprintf("%T", s), func(t *testing.T) { testSolver(t, s) })
 	}
 }

@@ -1,6 +1,8 @@
 package solver
 
 import (
+	"sort"
+
 	"github.com/step2019/idohazwordz/words"
 )
 
@@ -34,4 +36,26 @@ func Score(word string) int {
 		score += LetterPoints[l]
 	}
 	return score * score
+}
+
+type RuneSlice []rune
+
+func (s RuneSlice) Len() int      { return len(s) }
+func (s RuneSlice) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
+func (s RuneSlice) Less(i, j int) bool {
+	pi, pj := LetterPoints[s[i]], LetterPoints[s[j]]
+	switch {
+	case pi != pj:
+		return pi > pj
+	default:
+		return s[i] < s[j]
+	}
+}
+
+// Sort a string's by descending letter score (i.e. high scoring
+// letters first).
+func SortScore(letters string) string {
+	rs := RuneSlice(letters)
+	sort.Sort(rs)
+	return string(rs)
 }
