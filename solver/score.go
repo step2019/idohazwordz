@@ -38,11 +38,11 @@ func Score(word string) int {
 	return score * score
 }
 
-type RuneSlice []rune
+type scoredRuneSlice []rune
 
-func (s RuneSlice) Len() int      { return len(s) }
-func (s RuneSlice) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
-func (s RuneSlice) Less(i, j int) bool {
+func (s scoredRuneSlice) Len() int      { return len(s) }
+func (s scoredRuneSlice) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
+func (s scoredRuneSlice) Less(i, j int) bool {
 	pi, pj := LetterPoints[s[i]], LetterPoints[s[j]]
 	switch {
 	case pi != pj:
@@ -55,7 +55,7 @@ func (s RuneSlice) Less(i, j int) bool {
 // Sort a string's by descending letter score (i.e. high scoring
 // letters first).
 func SortScore(letters string) string {
-	rs := RuneSlice(letters)
+	rs := scoredRuneSlice(letters)
 	sort.Sort(rs)
 	return string(rs)
 }

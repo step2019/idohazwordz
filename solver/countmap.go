@@ -25,14 +25,14 @@ func (p cmPairSlice) Less(i, j int) bool {
 // but uses words.countMaps instead of sorted strings to represent
 // anagram clusters.
 type CountListSolver struct {
-	rs   RecursiveSolver
+	c    Common
 	dict []cmPair // Highest scoring words first.
 	Solver
 }
 
 func (s *CountListSolver) Init(dict []string) error {
-	s.rs.Init(dict)
-	for sorted, cs := range s.rs.sorted {
+	s.c.LexInit(dict)
+	for sorted, cs := range s.c.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
 		s.dict = append(s.dict, cmPair{cm: words.Count(sorted), word: cs.first()})

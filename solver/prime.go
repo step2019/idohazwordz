@@ -79,14 +79,14 @@ func (p pwPairSlice) Less(i, j int) bool {
 // but uses primeWords instead of sorted strings to represent anagram
 // clusters.
 type PrimeWordSolver struct {
-	rs   RecursiveSolver
+	c    Common
 	dict []pwPair // Highest scoring words first.
 	Solver
 }
 
 func (s *PrimeWordSolver) Init(dict []string) error {
-	s.rs.Init(dict)
-	for sorted, cs := range s.rs.sorted {
+	s.c.LexInit(dict)
+	for sorted, cs := range s.c.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
 		s.dict = append(s.dict, pwPair{pw: s.PrimeWord(sorted), word: cs.first()})

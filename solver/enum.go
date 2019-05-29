@@ -1,30 +1,29 @@
 package solver
 
-import "github.com/step2019/idohazwordz/words"
-
 // EnumSolver enumerates all of the subsets of a given string
 // iteratively instead of recursively.
 type EnumSolver struct {
-	rs RecursiveSolver // Borrowing RecursiveSolver's choice list.
+	c Common
 	Solver
 }
 
 func (s *EnumSolver) Init(dict []string) error {
-	return s.rs.Init(dict)
+	return s.c.ScoredInit(dict)
 }
 
 func (s *EnumSolver) Solve(letters string) string {
-	sorted := words.Sort(letters)
-	max := 1 << uint(len(letters))
+	sorted := SortScore(letters)
+	l := uint(len(letters))
+	max := (1 << l) - 1
 	var best *choices
-	for i := 0; i < max; i++ {
+	for i := max; i > 0; i-- {
 		var sub string
-		for j := uint(0); j < uint(len(letters)); j++ {
-			if (i & (1 << j)) != 0 {
-				sub += string(sorted[j])
+		for j := l; j > 0; j-- {
+			if (i & (1 << (j - 1))) != 0 {
+				sub += string(sorted[l-j])
 			}
 		}
-		cs := s.rs.sorted[sub]
+		cs := s.c.sorted[sub]
 		if best.score() < cs.score() {
 			best = cs
 		}

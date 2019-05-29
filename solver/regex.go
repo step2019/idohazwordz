@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"sort"
 
-	"github.com/step2019/idohazwordz/words"
+	"github.com/step17/ihazwordz/words"
 )
 
 // rePair stores an anagram word pair. It contains the original word,
@@ -27,14 +27,14 @@ func (p rePairSlice) Less(i, j int) bool {
 // RegexSolver goes through a sorted dictionary, checking if each word
 // can be made out of the given characters using regexs.
 type RegexSolver struct {
-	rs   RecursiveSolver
+	c    Common
 	dict []rePair // Highest scoring words first.
 	Solver
 }
 
 func (s *RegexSolver) Init(dict []string) error {
-	s.rs.Init(dict)
-	for sorted, cs := range s.rs.sorted {
+	s.c.LexInit(dict)
+	for sorted, cs := range s.c.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
 		s.dict = append(s.dict, rePair{re: asRE(sorted), word: cs.first()})

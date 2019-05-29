@@ -1,16 +1,16 @@
 package solver
 
-import "github.com/step2019/idohazwordz/words"
+import "github.com/step17/ihazwordz/words"
 
 // MemoSolver is a basic recursive solver, but with memoization.
 type MemoSolver struct {
-	rs   RecursiveSolver
+	c    Common
 	memo map[string]*choices
 	Solver
 }
 
 func (s *MemoSolver) Init(dict []string) error {
-	return s.rs.Init(dict)
+	return s.c.LexInit(dict)
 }
 
 func (s *MemoSolver) Solve(letters string) string {
@@ -25,9 +25,9 @@ func (s *MemoSolver) key(picked, remain string) string {
 
 func (s *MemoSolver) resolve(picked, remain string) *choices {
 	if remain == "" {
-		return s.rs.sorted[picked]
+		return s.c.sorted[picked]
 	}
-	if len(picked)+len(remain) < s.rs.minLen {
+	if len(picked)+len(remain) < s.c.minLen {
 		return nil
 	}
 
@@ -40,9 +40,9 @@ func (s *MemoSolver) resolve(picked, remain string) *choices {
 
 	// Solve this the normal recursive way.
 	next := remain[1:]
-	skip := s.resolve(picked, next)
 	kept := s.resolve(picked+remain[:1], next)
 	res := kept
+	skip := s.resolve(picked, next)
 	if skip.score() > kept.score() {
 		res = skip
 	}

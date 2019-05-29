@@ -49,7 +49,7 @@ func (p bfPairSlice) Less(i, j int) bool {
 // but uses bitfields instead of sorted strings to represent anagram
 // clusters.
 type BitfieldSolver struct {
-	rs   RecursiveSolver
+	c    Common
 	dict []bfPair       // Highest scoring words first.
 	max  words.CountMap // Max-covering count for the whole dictionary
 	Solver
@@ -64,12 +64,12 @@ func total(m words.CountMap) int {
 }
 
 func (s *BitfieldSolver) Init(dict []string) error {
-	s.rs.Init(dict)
-	for sorted := range s.rs.sorted {
+	s.c.LexInit(dict)
+	for sorted := range s.c.sorted {
 		s.max = words.Max(s.max, words.Count(sorted))
 	}
 	log.Printf("Bitfield: max covering = %v (%d bits)", s.max, total(s.max))
-	for sorted, cs := range s.rs.sorted {
+	for sorted, cs := range s.c.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
 		s.dict = append(s.dict, bfPair{bf: s.Bitfield(sorted), word: cs.first()})
