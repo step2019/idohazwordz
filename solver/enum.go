@@ -1,5 +1,7 @@
 package solver
 
+import "github.com/step17/ihazwordz/words"
+
 // EnumSolver enumerates all of the subsets of a given string
 // iteratively instead of recursively.
 type EnumSolver struct {
@@ -12,7 +14,7 @@ func (s *EnumSolver) Init(dict []string) error {
 }
 
 func (s *EnumSolver) Solve(letters string) string {
-	sorted := SortScore(letters)
+	sorted := words.Sort(letters)
 	l := uint(len(letters))
 	max := (1 << l) - 1
 	var best *choices

@@ -2,8 +2,6 @@ package solver
 
 import (
 	"sort"
-
-	"github.com/step17/ihazwordz/words"
 )
 
 // ListScoredSolver goes through a score-sorted dictionary, checking if each word
@@ -26,7 +24,7 @@ func (s *ListScoredSolver) Init(dict []string) error {
 }
 
 func (s ListScoredSolver) Solve(letters string) string {
-	sorted := words.Sort(letters)
+	sorted := SortScore(letters)
 	for _, p := range s.dict {
 		if s.canSpell(p.sorted, sorted) {
 			return p.word
@@ -45,7 +43,7 @@ func (s ListScoredSolver) canSpell(sub, sup string) bool {
 		case sub[bi] == sup[pi]:
 			bi++
 			pi++
-		case sub[bi] < sup[pi]:
+		case LetterPoints[rune(sub[bi])] > LetterPoints[rune(sup[pi])]:
 			// sub contains a character that isn't in sup
 			return false
 		default:

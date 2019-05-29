@@ -2,8 +2,6 @@ package solver
 
 import (
 	"sort"
-
-	"github.com/step17/ihazwordz/words"
 )
 
 // RegexScoredSolver goes through a sorted dictionary, checking if each word
@@ -26,7 +24,7 @@ func (s *RegexScoredSolver) Init(dict []string) error {
 }
 
 func (s RegexScoredSolver) Solve(letters string) string {
-	sorted := words.Sort(letters)
+	sorted := SortScore(letters)
 	for _, p := range s.dict {
 		if p.re.MatchString(sorted) {
 			return p.word
