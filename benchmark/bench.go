@@ -16,11 +16,12 @@ import (
 
 var (
 	dictionaryFile = flag.String("dictionary", "/usr/share/dict/words", "Dictionary file to use")
+	dictSampleFrac = flag.Float64("sample", 1, "sample this fraction of the dictionary")
 	letterCount    = flag.Int("letters", 16, "How many letters are provided on board?")
 	repitions      = flag.Int("reptitions", 3, "How many times to run each workload.")
 	workloadCount  = flag.Int("workloads", 123, "Run this many different workloads.")
 	workloadSize   = flag.Int("size", 123, "How many games to run per workload.")
-	seed           = flag.Int64("seed", 0, "Initial random seed.")
+	seed           = flag.Int64("seed", 0, "Initial random seed. Uses time.Now() if 0.")
 )
 
 // A workload is collection of game boards that might appear
@@ -63,15 +64,27 @@ func runWorkload(s solver.Solver, wl workload) time.Duration {
 	return time.Since(start)
 }
 
+func runif(r *rand.Rand, p float64) func(string) bool {
+	return func(string) bool {
+		if p >= 1 {
+			return true
+		}
+		return r.Float64() < p
+	}
+}
+
 func main() {
 	flag.Parse()
-	dict := words.Load(*dictionaryFile, *letterCount)
+	if *seed == 0 {
+		*seed = time.Now().UnixNano()
+	}
+	rng := rand.New(rand.NewSource(*seed))
+	dict := words.SamplingLoad(*dictionaryFile, *letterCount, runif(rng, *dictSampleFrac))
 	// warmup all the solvers.
 	solvers := solver.AllSolvers
 	for _, s := range solvers {
 		s.Init(dict)
 	}
-	rng := rand.New(rand.NewSource(*seed))
 	fmt.Println(strings.Join([]string{"solver", "workload", "rep", "size", "nanos", "nanos_per_solution"}, ","))
 	for wi := 0; wi < *workloadCount; wi++ {
 		wl := fakeWorkload(rng, *workloadSize)

@@ -67,7 +67,7 @@ func LoadValid(reader io.Reader, maxLen int, ch chan string) {
 	}
 }
 
-func Load(filename string, maxLen int) []string {
+func SamplingLoad(filename string, maxLen int, sampler func(string) bool) []string {
 	var dict []string
 	ch := make(chan string, 32)
 	go func() {
@@ -75,10 +75,17 @@ func Load(filename string, maxLen int) []string {
 		close(ch)
 	}()
 	for word := range ch {
+		if sampler != nil && !sampler(word) {
+			continue
+		}
 		dict = append(dict, word)
 	}
 	log.Printf("loaded %v words", len(dict))
 	return dict
+}
+
+func Load(filename string, maxLen int) []string {
+	return SamplingLoad(filename, maxLen, nil)
 }
 
 // Finds the maximum of each letter count for a set of CountMaps.  In
