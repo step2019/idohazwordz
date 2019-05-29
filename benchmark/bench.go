@@ -6,6 +6,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"math/rand"
 	"strings"
 	"time"
@@ -15,13 +16,14 @@ import (
 )
 
 var (
-	dictionaryFile = flag.String("dictionary", "/usr/share/dict/words", "Dictionary file to use")
-	dictSampleFrac = flag.Float64("sample", 1, "sample this fraction of the dictionary")
-	letterCount    = flag.Int("letters", 16, "How many letters are provided on board?")
-	repitions      = flag.Int("reptitions", 3, "How many times to run each workload.")
-	workloadCount  = flag.Int("workloads", 123, "Run this many different workloads.")
-	workloadSize   = flag.Int("size", 123, "How many games to run per workload.")
-	seed           = flag.Int64("seed", 0, "Initial random seed. Uses time.Now() if 0.")
+	dictionaryFile   = flag.String("dictionary", "/usr/share/dict/words", "Dictionary file to use")
+	dictProbableFrac = flag.Float64("sample", 1, "probabilistically sample this fraction of the dictionary")
+	dictExactFrac    = flag.Float64("exact", 1, "sample exactly this fraction of the dictionary (after --sample)")
+	letterCount      = flag.Int("letters", 16, "How many letters are provided on board?")
+	repitions        = flag.Int("reptitions", 3, "How many times to run each workload.")
+	workloadCount    = flag.Int("workloads", 123, "Run this many different workloads.")
+	workloadSize     = flag.Int("size", 123, "How many games to run per workload.")
+	seed             = flag.Int64("seed", 0, "Initial random seed. Uses time.Now() if 0.")
 )
 
 // A workload is collection of game boards that might appear
@@ -73,13 +75,26 @@ func runif(r *rand.Rand, p float64) func(string) bool {
 	}
 }
 
+func resample(r *rand.Rand, words []string, f float64) []string {
+	if f >= 1 {
+		return words
+	}
+	rand.Shuffle(len(words), func(i, j int) {
+		words[i], words[j] = words[j], words[i]
+	})
+	n := int(float64(len(words)) * f)
+	log.Printf("reducing to %v words", n)
+	return words[:n]
+}
+
 func main() {
 	flag.Parse()
 	if *seed == 0 {
 		*seed = time.Now().UnixNano()
 	}
 	rng := rand.New(rand.NewSource(*seed))
-	dict := words.SamplingLoad(*dictionaryFile, *letterCount, runif(rng, *dictSampleFrac))
+	dict := words.SamplingLoad(*dictionaryFile, *letterCount, runif(rng, *dictProbableFrac))
+	dict = resample(rng, dict, *dictExactFrac)
 	// warmup all the solvers.
 	solvers := solver.AllSolvers
 	for _, s := range solvers {
