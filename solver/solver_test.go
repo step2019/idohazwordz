@@ -24,7 +24,7 @@ func testSolver(t *testing.T, s Solver) {
 		{"", ""},
 		{"VIMCAT", "VIM"},
 		{"MCIVTA", "VIM"},
-		//		{"OMPPALSEOOMQK", "POMPLAMOOSE"},
+		{"OMPPALSEOOMQK", "POMPLAMOOSE"},
 		{"NEEQ", "QUEEN"},
 	} {
 		log.Printf("running %T.Solve(%v)", s, tc.in)
