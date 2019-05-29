@@ -17,3 +17,7 @@ func Sort(letters string) string {
 	sort.Sort(rs)
 	return string(rs)
 }
+
+func SortRunes(rs []rune) {
+	sort.Sort(rs)
+}
