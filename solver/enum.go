@@ -8,7 +8,7 @@ type EnumSolver struct {
 }
 
 func (s *EnumSolver) Init(dict []string) error {
-	return s.c.ScoredInit(dict)
+	return s.c.LexInit(dict)
 }
 
 func (s *EnumSolver) Solve(letters string) string {
