@@ -27,7 +27,7 @@ func (m PointMap) assignPoints(letters string, points int) {
 	}
 }
 
-func Score(word string) int {
+func SumScore(word string) int {
 	if word == "" {
 		return 0
 	}
@@ -35,6 +35,11 @@ func Score(word string) int {
 	for _, l := range words.Normalize(word) {
 		score += LetterPoints[l]
 	}
+	return score
+}
+
+func Score(word string) int {
+	score := SumScore(word)
 	return score * score
 }
 

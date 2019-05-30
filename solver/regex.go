@@ -61,6 +61,7 @@ func asRE(sorted string) *regexp.Regexp {
 	re := ""
 	for _, c := range sorted {
 		if prev != c {
+			// this is too lazy. really it should only match characters < c.
 			re += ".*"
 		}
 		re += string(c)
