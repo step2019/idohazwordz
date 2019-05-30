@@ -93,6 +93,9 @@ func resample(r *rand.Rand, words []string, f float64) []string {
 func parseSolvers(s string) map[string]bool {
 	m := map[string]bool{}
 	for _, f := range strings.Split(s, ",") {
+		if f == "" {
+			continue
+		}
 		m[f] = true
 	}
 	return m
@@ -102,6 +105,7 @@ func main() {
 	flag.Parse()
 	ignoreSolvers := parseSolvers(*ignoreSolverStr)
 	onlySolvers := parseSolvers(*onlySolverStr)
+	log.Printf("onlySolvers=%v ignoreSolvers=%v", onlySolvers, ignoreSolvers)
 	if *seed == 0 {
 		*seed = time.Now().UnixNano()
 	}
@@ -124,7 +128,7 @@ func main() {
 	}
 	fmt.Println(strings.Join([]string{
 		"solver", "workload", "rep", "size",
-		"dict", "letters",
+		"pdict", "edict", "dict", "letters",
 		"nanos", "log10_nanos_per_solution"}, ","))
 	for wi := 0; wi < *workloadCount; wi++ {
 		wl := fakeWorkload(rng, *workloadSize)
@@ -133,7 +137,7 @@ func main() {
 				dur := runWorkload(s, wl)
 				fmt.Printf("%v,%v,%v,%v,%v,%v,%v,%v\n",
 					solver.Name(s), wi, rep, *workloadSize,
-					len(dict), *letterCount,
+					*dictProbableFrac, *dictExactFrac, len(dict), *letterCount,
 					dur.Nanoseconds(), math.Log10(float64(dur.Nanoseconds())/float64(*workloadSize)))
 			}
 		}
