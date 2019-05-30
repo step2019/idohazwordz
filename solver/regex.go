@@ -1,7 +1,6 @@
 package solver
 
 import (
-	"log"
 	"regexp"
 	"sort"
 
@@ -47,7 +46,6 @@ func (s *RegexSolver) Init(dict []string) error {
 func (s RegexSolver) Solve(letters string) string {
 	sorted := words.Sort(letters)
 	for _, p := range s.dict {
-		log.Printf("check %v vs %v", sorted, p.re)
 		if p.re.MatchString(sorted) {
 			return p.word
 		}
@@ -84,6 +82,5 @@ func asRE(sorted string) *regexp.Regexp {
 		re += string(c)
 	}
 	re += ".*"
-	log.Printf("%v -> %v", sorted, re)
 	return regexp.MustCompile(re)
 }
