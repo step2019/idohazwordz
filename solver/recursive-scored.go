@@ -21,19 +21,20 @@ func (s *RecursiveScoredSolver) Solve(letters string) string {
 }
 
 func (s *RecursiveScoredSolver) resolve(picked, remain string, skip int) *choices {
-	if remain == nil {
+	if remain == "" {
 		return s.c.sorted[picked]
 	}
 	if len(picked)+len(remain) < s.c.minLen {
 		return nil
 	}
 	next := remain[1:]
-	kept := s.resolve(picked+remain[:1], next)
+	kept := s.resolve(picked+remain[:1], next, skip)
 	if kept != nil {
 		return kept
 	}
-	if LetterPoints[remain[0]] > skip {
+	p := LetterPoints[rune(remain[0])]
+	if p > skip {
 		return nil
 	}
-	return s.resolve(picked, next)
+	return s.resolve(picked, next, skip-p)
 }
