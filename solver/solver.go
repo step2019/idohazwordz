@@ -20,6 +20,7 @@ type Solver interface {
 var AllSolvers = []Solver{
 	&RecursiveSolver{},
 	&RecursiveScoredSolver{},
+	&ScoredMemoSolver{},
 	&MemoSolver{},
 	&EnumSolver{},
 	&ListSolver{},
