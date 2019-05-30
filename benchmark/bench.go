@@ -25,6 +25,7 @@ var (
 	workloadCount    = flag.Int("workloads", 123, "Run this many different workloads.")
 	workloadSize     = flag.Int("size", 123, "How many games to run per workload.")
 	seed             = flag.Int64("seed", 0, "Initial random seed. Uses time.Now() if 0.")
+	ignoreSolverStr  = flag.String("ignore", "RecursiveScored,ListScored", "CSV of solvers to skip")
 )
 
 // A workload is collection of game boards that might appear
@@ -88,8 +89,17 @@ func resample(r *rand.Rand, words []string, f float64) []string {
 	return words[:n]
 }
 
+func parseIgnored(s string) map[string]bool {
+	m := map[string]bool{}
+	for _, f := range strings.Split(s, ",") {
+		m[f] = true
+	}
+	return m
+}
+
 func main() {
 	flag.Parse()
+	ignoreSolvers := parseIgnored(*ignoreSolverStr)
 	if *seed == 0 {
 		*seed = time.Now().UnixNano()
 	}
@@ -97,8 +107,12 @@ func main() {
 	dict := words.SamplingLoad(*dictionaryFile, *letterCount, runif(rng, *dictProbableFrac))
 	dict = resample(rng, dict, *dictExactFrac)
 	// warmup all the solvers.
-	solvers := solver.AllSolvers
-	for _, s := range solvers {
+	solvers := []solver.Solver{}
+	for _, s := range solver.AllSolvers {
+		if ignoreSolvers[solver.Name(s)] {
+			continue
+		}
+		solvers = append(solvers, s)
 		s.Init(dict)
 	}
 	fmt.Println(strings.Join([]string{
