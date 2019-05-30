@@ -2,6 +2,7 @@ package solver
 
 import (
 	"fmt"
+	"log"
 	"testing"
 
 	"github.com/step2019/idohazwordz/words"
@@ -26,7 +27,7 @@ func testSolver(t *testing.T, s Solver) {
 		{"OMPPALSEOOMQK", "POMPLAMOOSE"},
 		{"NEEQ", "QUEEN"},
 	} {
-		//log.Printf("running %T.Solve(%v)", s, tc.in)
+		log.Printf("running %T.Solve(%v)", s, tc.in)
 		got := s.Solve(tc.in)
 		if !words.Count(tc.in).Contains(words.Count(got)) {
 			t.Errorf("Solve(%q) = %q but %q does not contain %q", tc.in, got, tc.in, got)

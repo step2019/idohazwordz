@@ -2,6 +2,8 @@ package solver
 
 import (
 	"sort"
+
+	"github.com/step17/ihazwordz/words"
 )
 
 // RegexScoredSolver goes through a sorted dictionary, checking if each word
@@ -17,7 +19,7 @@ func (s *RegexScoredSolver) Init(dict []string) error {
 	for sorted, cs := range s.c.sorted {
 		// all of thse are equivalently high scoring anagrams of
 		// eachother, so just pick one.
-		s.dict = append(s.dict, rePair{re: asRE(sorted), word: cs.first()})
+		s.dict = append(s.dict, rePair{re: asRE(words.Sort(sorted)), word: cs.first()})
 	}
 	sort.Sort(rePairSlice(s.dict))
 	return nil

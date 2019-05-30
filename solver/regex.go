@@ -1,6 +1,7 @@
 package solver
 
 import (
+	"log"
 	"regexp"
 	"sort"
 
@@ -46,6 +47,7 @@ func (s *RegexSolver) Init(dict []string) error {
 func (s RegexSolver) Solve(letters string) string {
 	sorted := words.Sort(letters)
 	for _, p := range s.dict {
+		log.Printf("check %v vs %v", sorted, p.re)
 		if p.re.MatchString(sorted) {
 			return p.word
 		}
@@ -53,19 +55,35 @@ func (s RegexSolver) Solve(letters string) string {
 	return ""
 }
 
+func chrTween(prev, c rune) string {
+	if prev+1 == c {
+		return ""
+	}
+	s := "["
+	for i := prev + 1; i < c; i++ {
+		s += string(i)
+	}
+	s += "]*"
+	return s
+}
+
 func asRE(sorted string) *regexp.Regexp {
 	if sorted == "" {
 		return regexp.MustCompile("")
 	}
-	prev := '^'
+	prev := 'A' - 1
 	re := ""
 	for _, c := range sorted {
 		if prev != c {
-			// this is too lazy. really it should only match characters < c.
-			re += ".*"
+			if prev >= 'A' {
+				re += "+"
+			}
+			re += chrTween(prev, c)
+			prev = c
 		}
 		re += string(c)
 	}
 	re += ".*"
+	log.Printf("%v -> %v", sorted, re)
 	return regexp.MustCompile(re)
 }

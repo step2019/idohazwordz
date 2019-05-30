@@ -26,6 +26,7 @@ var (
 	workloadSize     = flag.Int("size", 123, "How many games to run per workload.")
 	seed             = flag.Int64("seed", 0, "Initial random seed. Uses time.Now() if 0.")
 	ignoreSolverStr  = flag.String("ignore", "RecursiveScored,ListScored", "CSV of solvers to skip")
+	onlySolverStr    = flag.String("only", "", "if specified, benchmarks only these solvers.")
 )
 
 // A workload is collection of game boards that might appear
@@ -89,7 +90,7 @@ func resample(r *rand.Rand, words []string, f float64) []string {
 	return words[:n]
 }
 
-func parseIgnored(s string) map[string]bool {
+func parseSolvers(s string) map[string]bool {
 	m := map[string]bool{}
 	for _, f := range strings.Split(s, ",") {
 		m[f] = true
@@ -99,7 +100,8 @@ func parseIgnored(s string) map[string]bool {
 
 func main() {
 	flag.Parse()
-	ignoreSolvers := parseIgnored(*ignoreSolverStr)
+	ignoreSolvers := parseSolvers(*ignoreSolverStr)
+	onlySolvers := parseSolvers(*onlySolverStr)
 	if *seed == 0 {
 		*seed = time.Now().UnixNano()
 	}
@@ -109,7 +111,12 @@ func main() {
 	// warmup all the solvers.
 	solvers := []solver.Solver{}
 	for _, s := range solver.AllSolvers {
-		if ignoreSolvers[solver.Name(s)] {
+		name := solver.Name(s)
+		if len(onlySolvers) == 0 {
+			if ignoreSolvers[name] {
+				continue
+			}
+		} else if !onlySolvers[name] {
 			continue
 		}
 		solvers = append(solvers, s)
