@@ -16,6 +16,7 @@ var (
 	qFixer   = strings.NewReplacer("QU", "Q")
 	qUnfixer = strings.NewReplacer("Q", "Qu")
 	wordRE   = regexp.MustCompile(`^(?i:(?:[a-pr-z])|qu){3,}$`)
+	nonAlpha = regexp.MustCompile(`[^A-Z]`)
 )
 
 const (
@@ -23,7 +24,7 @@ const (
 )
 
 func Normalize(word string) string {
-	return qFixer.Replace(strings.ToUpper(word))
+	return nonAlpha.ReplaceAllString(qFixer.Replace(strings.ToUpper(word)), "")
 }
 
 func Denormalize(word string) string {
