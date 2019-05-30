@@ -26,7 +26,6 @@ var AllSolvers = []Solver{
 	&ListSolver{},
 	&ListScoredSolver{},
 	&RegexSolver{},
-	&RegexScoredSolver{},
 	&CountListSolver{},
 	&BitfieldSolver{},
 	&PrimeWordSolver{},
