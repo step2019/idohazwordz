@@ -1,6 +1,7 @@
 package solver
 
-// Basic recursive solver. Tries all 2^N possible subsets of letters.
+// Memoizing recursive solver but tries highested scoring subproblems
+// first, ensuring that the first match is also the best.
 type ScoredMemoSolver struct {
 	c    Common
 	todo map[int][]func() *choices
@@ -9,16 +10,6 @@ type ScoredMemoSolver struct {
 
 func (s *ScoredMemoSolver) Init(dict []string) error {
 	return s.c.ScoredInit(dict)
-}
-
-func reverse(str string) string {
-	b := []byte(str)
-	for i, j := 0, len(b)-1; i < j; {
-		b[i], b[j] = b[j], b[i]
-		i++
-		j--
-	}
-	return string(b)
 }
 
 func (s *ScoredMemoSolver) Solve(letters string) string {
