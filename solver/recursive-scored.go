@@ -17,6 +17,7 @@ func (s *RecursiveScoredSolver) Solve(letters string) string {
 			return cs.first()
 		}
 	}
+	return ""
 }
 
 func (s *RecursiveScoredSolver) resolve(picked, remain string, skip int) *choices {
