@@ -135,7 +135,7 @@ func main() {
 		for _, s := range solvers {
 			for rep := 0; rep < *repitions; rep++ {
 				dur := runWorkload(s, wl)
-				fmt.Printf("%v,%v,%v,%v,%v,%v,%v,%v\n",
+				fmt.Printf("%v,%v,%v,%v,%v,%v,%v,%v,%v,%v\n",
 					solver.Name(s), wi, rep, *workloadSize,
 					*dictProbableFrac, *dictExactFrac, len(dict), *letterCount,
 					dur.Nanoseconds(), math.Log10(float64(dur.Nanoseconds())/float64(*workloadSize)))
